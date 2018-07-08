@@ -19,6 +19,16 @@ function de(b) {
     return g.join("");
 }
 
+function b64EncodeUnicode(str) {
+    // first we use encodeURIComponent to get percent-encoded UTF-8,
+    // then we convert the percent encodings into raw bytes which
+    // can be fed into btoa.
+    return Buffer.from(encodeURIComponent(str).toString('base64').replace(/%([0-9A-F]{2})/g,
+        function toSolidBytes(match, p1) {
+            return String.fromCharCode('0x' + p1);
+    }));
+}
+
 fs.readFile('index.html', 'utf-8', (err, data) => {
 	if (err) throw err;
 
@@ -32,7 +42,7 @@ fs.readFile('index.html', 'utf-8', (err, data) => {
 
     //console.log(decodeURIComponent(de(decodeURIComponent(data))));
 
-	var url = head + Buffer.from(needed + encodedData).toString('base64');
+	var url = head + b64EncodeUnicode(needed + encodedData);
 	clipboardy.writeSync(url);
 	console.log('url in clipboard');
 })
