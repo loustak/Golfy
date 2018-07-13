@@ -4,7 +4,7 @@ const atob = require('atob');
 const btoa = require('btoa');
 const clipboardy = require('clipboardy');
 const base64 = require('js-base64').Base64;
-const lzstring = require('./lzstring');
+const lzstring = require('./lzw');
 
 
 fs.readFile('index.html', 'utf-8', (err, data) => {
