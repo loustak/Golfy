@@ -8,6 +8,8 @@ const lzstring = require('./lzw');
 const offline = '--offline';
 const online = '--online';
 const mode = process.argv[2] || offline;
+const file = process.argv[3] || 'app.html';
+console.log('opening ' + file);
 
 // Head of the URI
 const head = 'data:text/html;charset=utf-8;base64,';
@@ -27,7 +29,7 @@ function generateOfflineContent(data) {
     return hidePage + injectDecompressLib + decodeURI + startIndexContent + decodeURIEnd + encodedData + injectData;
 }
 
-fs.readFile('index.html', 'utf-8', (err, data) => {
+fs.readFile(file, 'utf-8', (err, data) => {
 	if (err) throw err;
     
     var uri;
